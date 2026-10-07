@@ -1,0 +1,40 @@
+APRESENTAÇÃO — ANGGORO ET AL. (2025)
+
+Arquivos
+- apresentacao_sbert_contrastivo.pdf: apresentação 16:9, 14 slides principais e 2 complementares.
+- apresentacao_sbert_contrastivo.tex: fonte LaTeX/Beamer, com notas e fontes por slide.
+- roteiro_apresentacao_sbert.txt: roteiro com tempos e explicações; 13 minutos no total.
+- compilar.ps1: recompila com Tectonic e atualiza PDF/log nesta pasta.
+- apresentacao_sbert_contrastivo.log: registro da compilação final.
+
+Compilação no PowerShell
+  .\compilar.ps1
+Ou informe o executável:
+  .\compilar.ps1 -Tectonic "C:\caminho\tectonic.exe"
+Alternativa: compilar o .tex duas vezes com pdflatex em uma distribuição LaTeX completa.
+Não há imagens ou bibliografia externas necessárias à compilação.
+Os arquivos intermediários e a revisão visual ficam em .build/, ignorada pelo Git.
+A instalação do Tectonic pode precisar de rede no primeiro uso para obter os pacotes LaTeX.
+
+Conteúdo
+Slides 1–2: artigo, problema e conexão com Welyab.
+Slides 3–4: bases, descrições, features e classes.
+Slides 5–7: SBERT, pooling, pares positivos e MNR.
+Slides 8–10: dois treinamentos, configurações e avaliação.
+Slides 11–14: resultados, limpeza, quantidade de pares, parâmetros e tamanho.
+Slides 15–16: cálculo conceitual da MNR e referências.
+
+Fontes e interpretação
+O artigo de Anggoro na pasta references é a versão dos autores disponibilizada pelo ORCA.
+Os resultados são transcritos das Tabelas III a VIII; as diferenças em pontos percentuais foram calculadas.
+Os exemplos de pares A/B são didáticos, não são enquadramentos fiscais reais.
+O código é usado como rótulo e para formar pares; a descrição é a entrada para inferência.
+Os capítulos 84/85 delimitam o recorte; 172/112 são as quantidades de classes previstas.
+Não se afirma uma padronização de comprimento dos códigos que o manuscrito não detalha explicitamente.
+A ressalva de falsos negativos é uma análise do apresentador.
+O resultado de Welyab não é comparado numericamente como ranking: classes, métricas e protocolos diferem.
+A comparação de Welyab privilegia a seção 4 do PDF, pois há inconsistências pontuais na seção 3 quanto à listagem de capítulos/modelos.
+
+Verificação
+16 páginas renderizadas e inspecionadas individualmente. Compilação LaTeX sem avisos de transbordamento.
+Os materiais antigos em backup/ foram preservados.

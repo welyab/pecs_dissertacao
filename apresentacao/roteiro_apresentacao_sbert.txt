@@ -1,86 +1,116 @@
-ROTEIRO DE APRESENTAÇÃO — SBERT E AJUSTE CONTRASTIVO
+ROTEIRO DE APRESENTAÇÃO — ANGGORO ET AL. (2025)
+14 slides principais; duração planejada: 13 minutos.
+Os 2 slides complementares ficam para perguntas.
 
-Apresentador: Welyab Paula | PECS / UEMA
-Duração prevista: 10 minutos (1 + 1 + 2 + 2 + 2 + 2).
-ARTIGO PRINCIPAL
-Anggoro, A. W.; Corcoran, P.; De Widt, D.; Li, Y. Harmonized system code classification using supervised contrastive learning with sentence BERT and multiple negative ranking loss. Data Technologies and Applications, 59(2), 279–301, 2025. DOI: 10.1108/DTA-01-2024-0052.
-Foi utilizada a versão dos autores no PDF de references, disponibilizada pelo ORCA.
+SLIDE 1 — Ajuste contrastivo para classificação fiscal
+0:00–0:30 (30 s)
 
-SLIDE 1 — Título, autores e problema
-Tempo: 1 minuto. Apresentar o artigo, seus quatro autores e a publicação de 2025.
-O problema é transformar descrições comerciais em códigos do Sistema Harmonizado.
-Abreviações, especificações e descrições semelhantes tornam a classificação difícil.
-A pergunta do estudo é se uma representação ajustada ao domínio melhora a classificação.
-O artigo é relacionado ao nosso trabalho porque também usa embeddings e classificadores.
-[Sources] PDF de Anggoro et al., resumo (p. 1 do manuscrito); folha ORCA para os dados bibliográficos.
+Apresentar o estudo e sua pergunta: ajustar a representação das descrições comerciais melhora a previsão de códigos fiscais? O foco será o artigo de Anggoro; o artigo de Welyab fornece a motivação e a conexão com NF-e.
 
-SLIDE 2 — Relação com o artigo de NF-e
-Tempo: 1 minuto. O ponto comum é a sequência descrição, vetor e classificador.
-No nosso artigo, o modelo que produz os vetores não é ajustado às NF-e; apenas os classificadores são treinados.
-No artigo selecionado, os autores também alteram o modelo que gera esses vetores.
-Nosso trabalho classifica capítulos; o outro considera muitas classes dentro de dois capítulos.
-Não comparar diretamente o nosso resultado de cerca de 98,5 por cento com o F1 deles: bases, classes e métricas são diferentes.
-A relação internacional é até seis dígitos HS; o estudo não valida a NCM brasileira de oito dígitos.
-[Sources] artigo_welyab_pecs.pdf, seções 3 e 4; Anggoro et al., seção 4.1, Tabela I.
+Fontes: Anggoro et al. (2025), folha ORCA e resumo.
 
-SLIDE 3 — Ideia principal: ajuste contrastivo
-Tempo: 2 minutos. Embedding é um vetor numérico que representa um texto.
-A proximidade entre vetores indica similaridade, mas um modelo generalista pode não destacar as diferenças relevantes para a classificação fiscal.
-No exemplo didático, duas descrições de camiseta são positivas porque supomos que têm o mesmo código validado.
-O carregador pertence a outra classe e funciona como negativo.
-A função de perda penaliza o modelo quando a âncora fica mais parecida com um negativo do que com seu positivo.
-O treinamento atualiza os parâmetros do codificador, e não apenas os parâmetros do classificador final.
-MNR significa Multiple Negative Ranking Loss. Os outros positivos do lote servem como negativos para cada âncora.
-Não é necessário criar manualmente uma lista de negativos para cada par.
-Há um cuidado: descrições do mesmo código em outros pares podem ser falsos negativos.
-Rótulos incorretos também podem ensinar relações erradas ao modelo.
-O exemplo aqui serve para explicar o mecanismo, não para atribuir uma NCM de verdade.
-[Sources] Anggoro et al., seções 3.3 e 4. O exemplo textual foi elaborado para esta apresentação.
+SLIDE 2 — O problema também aparece nas NF-e
+0:30–1:25 (55 s)
 
-SLIDE 4 — Método e bases
-Tempo: 2 minutos. São duas bases públicas de importações, com descrições reais e classes desbalanceadas.
-Os capítulos 84 e 85 delimitam produtos mecânicos e elétricos; a tarefa não se limita a prever esses dois capítulos.
-Os autores formam pares de transações do mesmo código, sem alterar artificialmente a descrição para obter o positivo.
-BERT e DistilBERT são utilizados como codificadores na arquitetura SBERT.
-O SBERT transforma cada texto em um vetor; esses vetores são entradas dos classificadores SVM e Random Forest.
-Explicar a separação relatada: 70 por cento dos registros ajustam o SBERT; os outros 30 por cento são usados no treinamento e na avaliação dos classificadores com cinco partições estratificadas.
-Isso é diferente de dizer que há apenas uma divisão convencional de treino e teste de 70/30 para toda a cadeia.
-Os experimentos também variam pooling, quantidade de positivos e hiperparâmetros.
-Para esta exposição, manter o foco no aprendizado da representação e na classificação posterior.
-[Sources] Anggoro et al., seções 4.1, 4.2 e 5.1; Tabela I.
+As duas pesquisas usam descrições reais, sujeitas a abreviações e ambiguidade. Em Welyab, os embeddings são gerados uma vez e os classificadores são treinados. Anggoro atualiza também o codificador. O ponto comum é texto, vetor e previsão de classe. O uso de rótulos declarados não comprova que o enquadramento fiscal está correto.
 
-SLIDE 5 — Resultados e limpeza dos textos
-Tempo: 2 minutos. F1 combina precisão e revocação; a média ponderada considera a frequência de cada classe.
-A referência da tabela é BERT ajustado diretamente para classificação, e não BERT sem treinamento.
-Na Índia, o melhor F1 apresentado sobe de 0,8406 para 0,8656, um ganho de 2,50 pontos percentuais.
-Nos EUA, o melhor valor sobe de 0,7689 para 0,8013, um ganho de 3,24 pontos percentuais.
-O artigo oferece evidência de que aprender a representação antes de classificar é útil nessas duas bases.
-Agora apontar que o bloco da limpeza corresponde a uma configuração diferente: SBERT com DistilBERT e SVM.
-Na Índia, o texto original tem F1 0,8603 e o limpo tem 0,7790; a perda é de 8,13 pontos percentuais.
-Números e especificações podem ter importância para diferenciar produtos. A análise ilustrativa com LIME no artigo reforça essa interpretação.
-Não concluir que toda limpeza é ruim: o resultado é específico da limpeza e das configurações avaliadas.
-No nosso artigo, original mais texto sanitizado funcionou melhor; esse contraste sugere uma pergunta experimental útil.
-[Sources] Anggoro et al., Tabelas III e IV e seção 5.3; Paula et al., seção 4.3.
+Fontes: Welyab et al., seções 3--4; Anggoro et al., resumo e seção 3.
 
-SLIDE 6 — Avaliação e possível aplicação
-Tempo: 2 minutos. A minha avaliação é que o artigo é interessante porque melhora uma etapa que nosso trabalho manteve fixa: a geração dos embeddings.
-A evidência, porém, está limitada aos dados e configurações estudados.
-Ter duas bases não significa demonstrar transferência: o artigo não mostra um modelo treinado em um país e testado sem novo ajuste no outro.
-A média ponderada pode esconder dificuldades nas classes raras, por isso deve ser acompanhada de macro-F1 e resultados por classe.
-A continuidade possível seria comparar o MiniLM já utilizado com o mesmo modelo após ajuste contrastivo.
-Manter o classificador e o conjunto de teste iguais ajuda a isolar o efeito do ajuste.
-Avançar para códigos mais detalhados em um recorte viável e preservar atributos técnicos relevantes.
-Reservar uma amostra validada por especialistas é importante, pois nossa base atual usa os códigos declarados pelos contribuintes.
-Separar avaliação por emitente e período permite investigar generalização, com controle de duplicatas e descrições muito próximas.
-Encerrar retomando a pergunta: o ganho do ajuste permanece em descrições de empresas e períodos que não apareceram no treinamento?
-Essa é uma hipótese para investigação, e não uma melhoria já comprovada nas NF-e.
-[Sources] Anggoro et al., seções 4, 5 e 6; artigo_welyab_pecs.pdf, seções 3 e 5. Avaliação e proposta do apresentador.
+SLIDE 3 — Duas bases reais de importação
+1:25–2:10 (45 s)
 
-CHECAGEM DE INTERPRETAÇÃO
-- Os resultados do artigo não são diretamente comparáveis aos cerca de 98,5% do estudo de NF-e.
-- O baseline da Tabela III é BERT ajustado diretamente, não BERT congelado.
-- A limpeza do slide 5 usa SBERT/DistilBERT + SVM (Tabela IV).
-- Pontos percentuais: (0,8656 − 0,8406) × 100 = 2,50; (0,8013 − 0,7689) × 100 = 3,24; (0,8603 − 0,7790) × 100 = 8,13.
-- Os códigos A/B são fictícios e não atribuem uma NCM real às descrições.
-- Os 70% ajustam o SBERT; nos outros 30%, os classificadores são treinados e avaliados com validação cruzada de cinco partições.
-- Aplicação em português, transferência entre fontes e oito dígitos NCM permanecem hipóteses.
+São duas bases públicas, escolhidas também pelo alinhamento do idioma com BERT e DistilBERT em inglês. Os números da tabela são do recorte experimental, não do universo inteiro de cada fonte. Os capítulos abrangem máquinas e equipamentos mecânicos e elétricos. O artigo relata desequilíbrio entre classes majoritárias e minoritárias.
+
+Fontes: Anggoro et al., seção 3.1 e Tabela I.
+
+SLIDE 4 — Descrição é entrada; código é o rótulo
+2:10–3:05 (55 s)
+
+Cada linha é uma transação. O código serve de supervisão e não de entrada na inferência. Marca, peso e dimensões permanecem no texto, não são colunas de features separadas. A tarefa distingue 172 ou 112 códigos. O HS é internacional até seis dígitos; a base pode acrescentar extensões locais. A Tabela II exibe códigos de oito dígitos, que não devem ser chamados de NCM brasileira. O artigo não enumera aqui todas as classes nem documenta explicitamente uma padronização única do comprimento nas duas bases.
+
+Fontes: Anggoro et al., seções 3.1 e 4.3.1; Tabela II.
+
+SLIDE 5 — SBERT transforma uma descrição em vetor
+3:05–3:50 (45 s)
+
+BERT gera representações dos tokens; pooling reúne essas representações em um vetor fixo para a descrição inteira. SBERT é um framework com codificador e pooling, não apenas o nome de um único modelo pronto. O artigo monta essa arquitetura com BERT ou DistilBERT pré-treinados; não treina um transformer do zero. DistilBERT é uma versão menor, usada para estudar o compromisso entre desempenho e tamanho.
+
+Fontes: Anggoro et al., seções 3.2 e 4.3.1.
+
+SLIDE 6 — O mesmo código define pares positivos
+3:50–5:10 (80 s)
+
+A âncora é uma descrição da base e o positivo é outra transação com o mesmo código. Os textos não precisam ser idênticos nem o produto precisa ser exatamente o mesmo. O método usa os rótulos para formar pares sem gerar paráfrases artificiais que possam eliminar informação técnica. O artigo experimenta um ou três positivos por âncora, formando pares adicionais. Os negativos serão obtidos a partir do lote pela MNR.
+
+Fontes: Anggoro et al., seção 3.2 e Figura 2. Exemplo elaborado para esta apresentação.
+
+SLIDE 7 — MNR compara o positivo com os demais
+5:10–6:30 (80 s)
+
+Para um lote com n pares, a âncora ai deve preferir bi aos demais bj. É uma competição de similaridades: não basta aproximar dois textos isoladamente. A MNR usa exemplos negativos do próprio lote, poupando seleção manual. A técnica não foi inventada por Anggoro: seu artigo referencia Henderson et al. (2017) e literatura posterior. A escolha dos pares pelo código é a aplicação supervisionada ao domínio. Apontar como análise crítica que a hipótese de outros pares serem negativos pode falhar se o lote contiver vários exemplos do mesmo código; não afirmar que o artigo documenta uma solução específica para isso.
+
+Fontes: Anggoro et al., seção 3.3 e Apêndice II; Henderson et al. (2017), referência do artigo. Ressalva de falsos negativos: análise metodológica do apresentador.
+
+SLIDE 8 — Há dois treinamentos separados
+6:30–7:45 (75 s)
+
+O protocolo não é uma única divisão convencional de 70% treino e 30% teste de toda a cadeia. Setenta por cento ajustam o gerador de embeddings; os outros trinta por cento são destinados ao treino e à avaliação dos classificadores com cinco partições estratificadas. A estratificação preserva aproximadamente as proporções das classes, não torna a base balanceada. Na segunda etapa o codificador ajustado produz features; são os parâmetros do SVM ou da floresta que são treinados. SVM aprende fronteiras de decisão; Random Forest combina árvores.
+
+Fontes: Anggoro et al., seção 3.1, seção sobre classificadores e seção 5.1.
+
+SLIDE 9 — Os experimentos isolam escolhas do método
+7:45–8:40 (55 s)
+
+Essa visão permite acompanhar quais componentes mudam. As tabelas seguintes são comparações de configurações, não um único experimento com todos os parâmetros possíveis combinados. MNR simétrica considera os dois sentidos do par. A escala foi avaliada em 20 e 50. O artigo não faz uma otimização adicional dos hiperparâmetros dos classificadores e usa recursos de cluster com GPU. A referência é transformer ajustado diretamente para prever classes, não BERT sem treinamento.
+
+Fontes: Anggoro et al., seções 4.2--4.3 e Tabelas III--VIII.
+
+SLIDE 10 — O F1 deve ser lido junto ao desbalanceamento
+8:40–9:20 (40 s)
+
+O artigo relata kappa de Cohen e médias macro, micro e ponderada de precisão, revocação e F1. Aqui as comparações numéricas usarão F1 ponderado para manter consistência com o foco do artigo. Ele não deve ser interpretado como número de decisões fiscais auditadas corretamente. Em dados desbalanceados, resultados por classe e macro-F1 completam a leitura. Não reproduzir como equivalentes as médias de F1 e a acurácia de outro estudo.
+
+Fontes: Anggoro et al., seção 5.1 e Tabela III.
+
+SLIDE 11 — O ajuste contrastivo supera a referência
+9:20–10:25 (65 s)
+
+Os ganhos são diferenças absolutas em pontos percentuais, não porcentagens relativas. Índia: 0,8656 menos 0,8406 = 0,0250. EUA: 0,8013 menos 0,7689 = 0,0324. A tabela mostra RF melhor na Índia e SVM ligeiramente melhor nos EUA. Não há vencedor universal entre os classificadores. A comparação sustenta o método nessas bases; não demonstra transferência entre países nem superioridade em toda tarefa de classificação fiscal. As tabelas de ablação contêm outras configurações e alguns resultados superiores, portanto evitar chamar esses valores de máximos globais do artigo.
+
+Fontes: Anggoro et al., Tabela III; diferenças calculadas a partir dos valores publicados.
+
+SLIDE 12 — A limpeza remove informação útil
+10:25–11:25 (60 s)
+
+O pré-processamento inclui conversão para minúsculas, remoção de duplicatas, limpeza de informação alfanumérica e retenção de tokens com pelo menos dois caracteres. A redução de tokens foi 8% na Índia e 19% nos EUA. A Tabela IV mostra queda também com RF; os dois números exibidos são do SVM com DistilBERT, não da configuração BERT do slide anterior. LIME analisa uma previsão local por perturbações do texto. A Figura 3 ilustra que a informação 512 GB influencia a decisão. Isso não prova causalidade geral nem que toda limpeza de texto prejudica.
+
+Fontes: Anggoro et al., seção 3.1, seção 5.3, Tabela IV e Figura 3.
+
+SLIDE 13 — Mais positivos enriquecem o ajuste
+11:25–12:15 (50 s)
+
+Cada âncora recebe três positivos em vez de um, produzindo mais pares de treinamento. O ganho é consistente nos quatro cenários da Tabela V, entre 2,18 e 2,70 pontos percentuais. Não extrapolar para um número ilimitado de positivos; o artigo não demonstra esse comportamento. O mesmo código pode agrupar várias formas legítimas de descrever mercadorias, e essa diversidade é o sinal que o codificador aprende.
+
+Fontes: Anggoro et al., seção 3.2, seção 4.3.1 e Tabela V; ganhos calculados.
+
+SLIDE 14 — O ganho também tem custo de armazenamento
+12:15–13:00 (45 s)
+
+As Tabelas VI a VIII avaliam componentes. Não atribuir o ganho principal a uma única escolha de pooling. A tabela de tamanho usa a Tabela III: DistilBERT com SVM ocupa menos que BERT diretamente ajustado, mas mais que DistilBERT diretamente ajustado, que tem 255 MB. Modelo menor não implica necessariamente menor latência de toda a cadeia: também há o classificador. As comparações de épocas e lotes são experimentos próprios; não misturar números para inventar uma configuração ótima conjunta.
+
+Fontes: Anggoro et al., Tabelas III e VI--VIII.
+
+SLIDE 15 — Como a MNR calcula a perda
+Complemento, fora dos 13 minutos
+
+A MNR padrão calcula entropia cruzada sobre candidatos do lote. As similaridades passam por uma escala e pela softmax. O rótulo esperado é a posição do positivo correspondente. A versão simétrica considera o sentido inverso. A escala avaliada no artigo foi 20 ou 50; não é uma regra fiscal.
+
+Fontes: Anggoro et al., seção 3.3, Tabela VII e Apêndice II; descrição didática do cálculo.
+
+SLIDE 16 — Fontes utilizadas
+Complemento, fora dos 13 minutos
+
+O artigo de Anggoro é a fonte primária dos resultados e conceitos apresentados; o PDF de Welyab fundamenta o contexto e a comparação metodológica. As referências técnicas são apresentadas conforme a bibliografia de Anggoro, sem sugerir experimentos próprios.
+
+Fontes: PDFs locais de Anggoro et al. e Welyab et al.; bibliografia de Anggoro.
+

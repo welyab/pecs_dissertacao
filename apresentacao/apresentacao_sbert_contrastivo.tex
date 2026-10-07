@@ -5,11 +5,12 @@
 \usepackage{lmodern}
 \usepackage{booktabs}
 \usepackage{array}
-
+\usepackage{amsmath}
 \definecolor{Azul}{HTML}{17324D}
 \definecolor{Verde}{HTML}{087F8C}
 \definecolor{Cinza}{HTML}{566573}
 \definecolor{Fundo}{HTML}{F0F5F8}
+\definecolor{Terracota}{HTML}{B04B35}
 \setbeamercolor{normal text}{fg=Azul,bg=white}
 \setbeamercolor{structure}{fg=Verde}
 \setbeamercolor{frametitle}{fg=Azul,bg=white}
@@ -20,235 +21,428 @@
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{itemize items}[circle]
 \setbeamersize{text margin left=8mm,text margin right=8mm}
-\setbeamertemplate{footline}{%
-  \leavevmode\hbox{%
-    \begin{beamercolorbox}[wd=.88\paperwidth,ht=3.5ex,dp=1.5ex,leftskip=8mm]{normal text}%
-      \scriptsize\color{Cinza} Welyab Paula\quad |\quad SBERT e classificação fiscal
-    \end{beamercolorbox}%
-    \begin{beamercolorbox}[wd=.12\paperwidth,ht=3.5ex,dp=1.5ex,center]{normal text}%
-      \scriptsize\insertframenumber/\inserttotalframenumber
-    \end{beamercolorbox}}}
+\setlength{\parskip}{0pt}
+\setbeamertemplate{itemize/enumerate body begin}{\setlength{\itemsep}{2mm}}
+\newcommand{\secao}{LEITURA DE ARTIGO}
+\newcommand{\fonte}[1]{\vfill\par{\fontsize{7}{8}\selectfont\color{Cinza} Fonte: #1\par}}
+\setbeamertemplate{headline}{}
+\setbeamertemplate{frametitle}{\vspace{1.5mm}{\fontsize{7}{8}\selectfont\color{Verde}\secao\par}\vspace{1.5mm}{\usebeamerfont{frametitle}\insertframetitle\par}\vspace{1.5mm}}
+\setbeamertemplate{footline}{\leavevmode\hbox{\begin{beamercolorbox}[wd=.85\paperwidth,ht=3ex,dp=1.5ex,leftskip=8mm]{normal text}\fontsize{7}{8}\selectfont\color{Cinza} Welyab Paula\quad |\quad Anggoro et al. (2025)\end{beamercolorbox}\begin{beamercolorbox}[wd=.15\paperwidth,ht=3ex,dp=1.5ex,center]{normal text}\fontsize{7}{8}\selectfont\color{Cinza}\ifnum\value{framenumber}>14 Complemento\else\insertframenumber/14\fi\end{beamercolorbox}}}
 \setbeameroption{hide notes}
-% Para gerar uma versão com notas, substitua hide notes por show notes.
-\newcommand{\fonte}[1]{\par\vspace{1.5mm}{\fontsize{7}{8}\selectfont\color{Cinza} Fonte: #1\par}}
-\hypersetup{pdftitle={Ajuste contrastivo para classificação de produtos no Sistema Harmonizado},pdfauthor={Welyab Paula},pdfsubject={Apresentação do artigo de Anggoro et al. (2025)}}
-
+\hypersetup{pdftitle={Ajuste contrastivo para classificação fiscal - Anggoro et al. (2025)},pdfauthor={Welyab Paula},pdfsubject={SBERT, MNR e classificação de códigos HS; apresentação de aproximadamente 13 minutos}}
+\DeclareFontShape{T1}{lmss}{bx}{sl}{<->ssub*lmss/bx/n}{}
+\DeclareFontShape{T1}{lmss}{bx}{it}{<->ssub*lmss/bx/n}{}
+\DeclareMathSizes{10}{10.95}{8}{6}
 \begin{document}
-
-% SLIDE 1 -- 1 minuto
+\renewcommand{\secao}{LEITURA DE ARTIGO}
+% Slide 1; 30 segundos
 \begin{frame}[t]
-  \vspace{3mm}
-  {\color{Verde}\small LEITURA DE ARTIGO\par}
-  \vspace{3mm}
-  {\LARGE\bfseries Ajuste contrastivo para\\[1mm]
-  classificação de produtos\par}
-  \vspace{4mm}
-  {\small\itshape Harmonized System Code Classification using Supervised Contrastive Learning with Sentence BERT and Multiple Negative Ranking Loss\par}
-  \vspace{3mm}
-  {\small Angga Wahyu Anggoro, Padraig Corcoran,\\
-  Dennis De Widt e Yuhua Li\par}
-  {\small\color{Cinza} Data Technologies and Applications, 59(2), 279--301, 2025\par}
-  \vspace{4mm}
-  \textbf{Problema:} prever o código HS a partir de descrições comerciais curtas, técnicas e pouco padronizadas.
-  \vfill
-  {\small Apresentação: Welyab Paula\quad |\quad PECS / UEMA\par}
-  \fonte{Anggoro et al. (2025), resumo. DOI: \href{https://doi.org/10.1108/DTA-01-2024-0052}{10.1108/DTA-01-2024-0052}.}
+\normalfont\sffamily
+{\fontsize{7}{8}\selectfont\color{Verde} LEITURA DE ARTIGO\par}
+\par\vspace{3mm}
+{\LARGE\bfseries Ajuste contrastivo para\\ classificação fiscal\par}
+\par\vspace{1.5mm}
+{\small\itshape Harmonized System Code Classification using Supervised Contrastive Learning with Sentence BERT and Multiple Negative Ranking Loss\par}
+\par\vspace{1.5mm}
+Angga Wahyu Anggoro, Padraig Corcoran,\\ Dennis De Widt e Yuhua Li\par
+\par\vspace{1.5mm}
+{\small Data Technologies and Applications, 59(2), 279--301, 2025\par}
+\vfill
+{\small Welyab Paula\quad |\quad PECS / UEMA\par}
+\fonte{Anggoro et al. (2025), folha ORCA e resumo.}
 \end{frame}
-\note{
-Tempo: 1 minuto. Apresentar o artigo, seus quatro autores e a publicação de 2025.
-O problema é transformar descrições comerciais em códigos do Sistema Harmonizado.
-Abreviações, especificações e descrições semelhantes tornam a classificação difícil.
-A pergunta do estudo é se uma representação ajustada ao domínio melhora a classificação.
-O artigo é relacionado ao nosso trabalho porque também usa embeddings e classificadores.
-[Sources] PDF de Anggoro et al., resumo (p. 1 do manuscrito); folha ORCA para os dados bibliográficos.
-}
+\note{\small Apresentar o estudo e sua pergunta: ajustar a representação das descrições comerciais melhora a previsão de códigos fiscais? O foco será o artigo de Anggoro; o artigo de Welyab fornece a motivação e a conexão com NF-e.\par [Sources] Anggoro et al. (2025), folha ORCA e resumo.}
 
-% SLIDE 2 -- 1 minuto
-\begin{frame}[t]{A conexão está nos embeddings}
-  \vspace{2mm}
-  \begin{columns}[T,onlytextwidth]
-    \begin{column}{.47\textwidth}
-      \textbf{Nosso artigo sobre NF-e}\par
-      \vspace{3mm}
-      \begin{itemize}\setlength{\itemsep}{2mm}
-        \item Descrições em português.
-        \item Embeddings prontos: MiniLM, MPNet e E5.
-        \item Classificação de capítulos NCM em recortes de 2 e 4 classes.
-      \end{itemize}
-    \end{column}
-    \begin{column}{.47\textwidth}
-      \textbf{Anggoro et al. (2025)}\par
-      \vspace{3mm}
-      \begin{itemize}\setlength{\itemsep}{2mm}
-        \item Descrições comerciais em inglês.
-        \item SBERT ajustado com pares do mesmo código.
-        \item 172 e 112 classes em produtos dos capítulos 84 e 85.
-      \end{itemize}
-    \end{column}
-  \end{columns}
-  \vspace{5mm}
-  \begin{block}{A diferença metodológica}
-    Ajustar a representação dos textos \textbf{antes} de treinar o classificador.
-  \end{block}
-  \fonte{Paula et al., seções 3--4; Anggoro et al. (2025), seção 4.1 e Tabela I.}
+\renewcommand{\secao}{MOTIVAÇÃO}
+% Slide 2; 55 segundos
+\begin{frame}[t]{O problema também aparece nas NF-e}
+\normalfont\sffamily
+\textbf{Descrições livres tornam a classificação fiscal difícil.}
+\par\vspace{1.5mm}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.47\textwidth}
+\textbf{Welyab et al.}\par\par\vspace{1.5mm}
+\begin{itemize}
+\item NF-e da SEFAZ-MA, em português.
+\item Embeddings prontos e classificadores supervisionados.
+\item Previsão de capítulos da NCM.
+\end{itemize}
+\end{column}
+\begin{column}{.47\textwidth}
+\textbf{Anggoro et al.}\par\par\vspace{1.5mm}
+\begin{itemize}
+\item Declarações de importação, em inglês.
+\item Ajuste contrastivo do gerador de embeddings.
+\item Previsão de códigos dentro de dois capítulos.
+\end{itemize}
+\end{column}
+\end{columns}\par
+\par\vspace{1.5mm}
+\begin{block}{Pergunta central}
+Aprender a representação no domínio melhora a classificação?
+\end{block}
+\fonte{Welyab et al., seções 3--4; Anggoro et al., resumo e seção 3.}
 \end{frame}
-\note{
-Tempo: 1 minuto. O ponto comum é a sequência descrição, vetor e classificador.
-No nosso artigo, o modelo que produz os vetores não é ajustado às NF-e; apenas os classificadores são treinados.
-No artigo selecionado, os autores também alteram o modelo que gera esses vetores.
-Nosso trabalho classifica capítulos; o outro considera muitas classes dentro de dois capítulos.
-Não comparar diretamente o nosso resultado de cerca de 98,5 por cento com o F1 deles: bases, classes e métricas são diferentes.
-A relação internacional é até seis dígitos HS; o estudo não valida a NCM brasileira de oito dígitos.
-[Sources] artigo_welyab_pecs.pdf, seções 3 e 4; Anggoro et al., seção 4.1, Tabela I.
-}
+\note{\small As duas pesquisas usam descrições reais, sujeitas a abreviações e ambiguidade. Em Welyab, os embeddings são gerados uma vez e os classificadores são treinados. Anggoro atualiza também o codificador. O ponto comum é texto, vetor e previsão de classe. O uso de rótulos declarados não comprova que o enquadramento fiscal está correto.\par [Sources] Welyab et al., seções 3--4; Anggoro et al., resumo e seção 3.}
 
-% SLIDE 3 -- 2 minutos
-\begin{frame}[t]{Aprender quais descrições aproximar}
-  \vspace{1mm}
-  \textbf{Ajuste contrastivo:} aprender embeddings que reconheçam pares relacionados.\par
-  \vspace{4mm}
-  \begin{tabular}{@{}p{.19\textwidth}p{.56\textwidth}p{.19\textwidth}@{}}
-    \toprule
-    \textbf{Papel} & \textbf{Descrição ilustrativa} & \textbf{Rótulo}\\
-    \midrule
-    Âncora & Camiseta masculina 100\% algodão & Código A\\[2mm]
-    Positivo & Camiseta masc. de algodão & Código A\\[2mm]
-    Negativo & Carregador para telefone celular & Código B\\
-    \bottomrule
-  \end{tabular}
-  \vspace{4mm}
-  \alert{Aproximar âncora e positivo; reduzir a similaridade com os negativos.}
-  \vspace{3mm}
-  \begin{itemize}\setlength{\itemsep}{1mm}
-    \item O mesmo código define os pares positivos.
-    \item A perda MNR usa os outros exemplos do lote como negativos.
-  \end{itemize}
-  {\scriptsize\color{Cinza} Exemplo didático; códigos A/B não representam enquadramentos fiscais reais.}
-  \fonte{Anggoro et al. (2025), seções 3.3 e 4, construção dos pares e Multiple Negative Ranking Loss.}
+\renewcommand{\secao}{DADOS}
+% Slide 3; 45 segundos
+\begin{frame}[t]{Duas bases reais de importação}
+\normalfont\sffamily
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+& \textbf{Índia} & \textbf{Estados Unidos}\\
+\midrule
+Ano das transações & 2016 & 2018\\
+Fonte & Zauba & Enigma\\
+Transações no recorte & 66.522 & 58.003\\
+Classes & \textbf{172} & \textbf{112}\\
+\bottomrule
+\end{tabular}\par
+\end{center}
+\par\vspace{1.5mm}
+\begin{itemize}
+\item Descrições em inglês; dados de declarações aduaneiras.
+\item Recorte: capítulos \textbf{84 e 85} do Sistema Harmonizado.
+\item Classes desbalanceadas: razão média relatada de \textbf{30:1}.
+\end{itemize}
+\fonte{Anggoro et al., seção 3.1 e Tabela I.}
 \end{frame}
-\note{
-Tempo: 2 minutos. Embedding é um vetor numérico que representa um texto.
-A proximidade entre vetores indica similaridade, mas um modelo generalista pode não destacar as diferenças relevantes para a classificação fiscal.
-No exemplo didático, duas descrições de camiseta são positivas porque supomos que têm o mesmo código validado.
-O carregador pertence a outra classe e funciona como negativo.
-A função de perda penaliza o modelo quando a âncora fica mais parecida com um negativo do que com seu positivo.
-O treinamento atualiza os parâmetros do codificador, e não apenas os parâmetros do classificador final.
-MNR significa Multiple Negative Ranking Loss. Os outros positivos do lote servem como negativos para cada âncora.
-Não é necessário criar manualmente uma lista de negativos para cada par.
-Há um cuidado: descrições do mesmo código em outros pares podem ser falsos negativos.
-Rótulos incorretos também podem ensinar relações erradas ao modelo.
-O exemplo aqui serve para explicar o mecanismo, não para atribuir uma NCM de verdade.
-[Sources] Anggoro et al., seções 3.3 e 4. O exemplo textual foi elaborado para esta apresentação.
-}
+\note{\small São duas bases públicas, escolhidas também pelo alinhamento do idioma com BERT e DistilBERT em inglês. Os números da tabela são do recorte experimental, não do universo inteiro de cada fonte. Os capítulos abrangem máquinas e equipamentos mecânicos e elétricos. O artigo relata desequilíbrio entre classes majoritárias e minoritárias.\par [Sources] Anggoro et al., seção 3.1 e Tabela I.}
 
-% SLIDE 4 -- 2 minutos
-\begin{frame}[t]{O método combina ajuste e classificação}
-  \vspace{1mm}
-  \begin{tabular}{@{}lrr@{}}
-    \toprule
-    \textbf{Base de importações} & \textbf{Transações} & \textbf{Classes}\\
-    \midrule
-    Índia (2016) & 66.522 & 172\\
-    Estados Unidos (2018) & 58.003 & 112\\
-    \bottomrule
-  \end{tabular}
-  \par\vspace{2mm}
-  {\small Textos em inglês; capítulos 84 e 85; classes desbalanceadas.\par}
-  \vspace{2mm}
-  {\centering
-    \textbf{Descrições + códigos}\quad$\longrightarrow$\quad\textbf{Pares positivos}\\[1mm]
-    $\downarrow$\\[1mm]
-    \textbf{SBERT + perda MNR}\quad$\longrightarrow$\quad\textbf{Embeddings}\\[1mm]
-    $\downarrow$\\[1mm]
-    \textbf{SVM / Random Forest}\quad$\longrightarrow$\quad\textbf{Código previsto}
-  \par}
-  {\small 70\%: ajuste do SBERT. 30\%: treino e avaliação dos classificadores.\\
-  Validação cruzada estratificada com 5 partições.}
-  \fonte{Anggoro et al. (2025), seções 4.1 e 5.1; Tabela I.}
+\renewcommand{\secao}{DADOS}
+% Slide 4; 55 segundos
+\begin{frame}[t]{Descrição é entrada; código é o rótulo}
+\normalfont\sffamily
+\textbf{Entrada:} descrição comercial do produto.\par
+{\small Pode conter marca, modelo, capacidade, dimensões e número de série.}
+\par\vspace{1.5mm}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}lp{.70\textwidth}@{}}
+\toprule
+\textbf{Código} & \textbf{Descrição original (trecho)}\\
+\midrule
+84713010 & X2 LAPTOP LENOVO MODEL THINKPAD T430\\
+85285100 & LED MONITOR, S22E360H, 21.5, INDIA \ldots\\
+85423100 & INTEGRATED CIRCUIT LOGIC MONO ASTBL \ldots\\
+\bottomrule
+\end{tabular}\par
+\par\vspace{1.5mm}
+\textbf{Features dos classificadores:} 768 dimensões do embedding.\par
+\par\vspace{1.5mm}
+\alert{84 e 85 delimitam o recorte; não são as duas classes previstas.}
+\fonte{Anggoro et al., seções 3.1 e 4.3.1; Tabela II.}
 \end{frame}
-\note{
-Tempo: 2 minutos. São duas bases públicas de importações, com descrições reais e classes desbalanceadas.
-Os capítulos 84 e 85 delimitam produtos mecânicos e elétricos; a tarefa não se limita a prever esses dois capítulos.
-Os autores formam pares de transações do mesmo código, sem alterar artificialmente a descrição para obter o positivo.
-BERT e DistilBERT são utilizados como codificadores na arquitetura SBERT.
-O SBERT transforma cada texto em um vetor; esses vetores são entradas dos classificadores SVM e Random Forest.
-Explicar a separação relatada: 70 por cento dos registros ajustam o SBERT; os outros 30 por cento são usados no treinamento e na avaliação dos classificadores com cinco partições estratificadas.
-Isso é diferente de dizer que há apenas uma divisão convencional de treino e teste de 70/30 para toda a cadeia.
-Os experimentos também variam pooling, quantidade de positivos e hiperparâmetros.
-Para esta exposição, manter o foco no aprendizado da representação e na classificação posterior.
-[Sources] Anggoro et al., seções 4.1, 4.2 e 5.1; Tabela I.
-}
+\note{\small Cada linha é uma transação. O código serve de supervisão e não de entrada na inferência. Marca, peso e dimensões permanecem no texto, não são colunas de features separadas. A tarefa distingue 172 ou 112 códigos. O HS é internacional até seis dígitos; a base pode acrescentar extensões locais. A Tabela II exibe códigos de oito dígitos, que não devem ser chamados de NCM brasileira. O artigo não enumera aqui todas as classes nem documenta explicitamente uma padronização única do comprimento nas duas bases.\par [Sources] Anggoro et al., seções 3.1 e 4.3.1; Tabela II.}
 
-% SLIDE 5 -- 2 minutos
-\begin{frame}[t]{O ajuste melhora o F1; a limpeza prejudica}
-  \vspace{1mm}
-  \textbf{F1 ponderado: comparação com BERT ajustado diretamente}\par
-  \vspace{2mm}
-  \begin{tabular}{@{}lcc@{}}
-    \toprule
-    \textbf{Método} & \textbf{Índia} & \textbf{EUA}\\
-    \midrule
-    BERT ajustado diretamente & 0,8406 & 0,7689\\
-    SBERT/BERT + SVM & 0,8620 & \alert{0,8013}\\
-    SBERT/BERT + Random Forest & \alert{0,8656} & 0,8005\\
-    \bottomrule
-  \end{tabular}\par
-  \vspace{2mm}
-  {\small Melhor ganho: \textbf{+2,50 pontos percentuais} na Índia e \textbf{+3,24} nos EUA.}
-  \vspace{1mm}
-  \begin{block}{Limpeza: SBERT/DistilBERT + SVM}
-    Índia: texto original \textbf{0,8603} $\rightarrow$ texto limpo \textbf{0,7790}.\\
-    Queda de \textbf{8,13 pontos percentuais} no F1 ponderado.
-  \end{block}
-  {\small Remover informações alfanuméricas pode eliminar atributos técnicos úteis.}
-  \fonte{Anggoro et al. (2025), Tabelas III e IV; diferenças calculadas a partir dos valores publicados.}
+\renewcommand{\secao}{CONCEITOS}
+% Slide 5; 45 segundos
+\begin{frame}[t]{SBERT transforma uma descrição em vetor}
+\normalfont\sffamily
+\textbf{Embedding:} representação numérica de um texto.\par
+\par\vspace{1.5mm}
+\begin{center}
+Descrição do produto\\[1mm]
+$\downarrow$\\[1mm]
+\textbf{BERT ou DistilBERT}\quad +\quad \textbf{pooling}\\[1mm]
+$\downarrow$\\[1mm]
+Vetor com \textbf{768 dimensões}
+\end{center}
+\par\vspace{1.5mm}
+\begin{itemize}
+\item \textbf{SBERT:} arquitetura para representar textos inteiros.
+\item \textbf{Pooling:} agrega os vetores dos tokens (média, máximo ou [CLS]).
+\item O ajuste atualiza os parâmetros do codificador.
+\end{itemize}
+\fonte{Anggoro et al., seções 3.2 e 4.3.1.}
 \end{frame}
-\note{
-Tempo: 2 minutos. F1 combina precisão e revocação; a média ponderada considera a frequência de cada classe.
-A referência da tabela é BERT ajustado diretamente para classificação, e não BERT sem treinamento.
-Na Índia, o melhor F1 apresentado sobe de 0,8406 para 0,8656, um ganho de 2,50 pontos percentuais.
-Nos EUA, o melhor valor sobe de 0,7689 para 0,8013, um ganho de 3,24 pontos percentuais.
-O artigo oferece evidência de que aprender a representação antes de classificar é útil nessas duas bases.
-Agora apontar que o bloco da limpeza corresponde a uma configuração diferente: SBERT com DistilBERT e SVM.
-Na Índia, o texto original tem F1 0,8603 e o limpo tem 0,7790; a perda é de 8,13 pontos percentuais.
-Números e especificações podem ter importância para diferenciar produtos. A análise ilustrativa com LIME no artigo reforça essa interpretação.
-Não concluir que toda limpeza é ruim: o resultado é específico da limpeza e das configurações avaliadas.
-No nosso artigo, original mais texto sanitizado funcionou melhor; esse contraste sugere uma pergunta experimental útil.
-[Sources] Anggoro et al., Tabelas III e IV e seção 5.3; Paula et al., seção 4.3.
-}
+\note{\small BERT gera representações dos tokens; pooling reúne essas representações em um vetor fixo para a descrição inteira. SBERT é um framework com codificador e pooling, não apenas o nome de um único modelo pronto. O artigo monta essa arquitetura com BERT ou DistilBERT pré-treinados; não treina um transformer do zero. DistilBERT é uma versão menor, usada para estudar o compromisso entre desempenho e tamanho.\par [Sources] Anggoro et al., seções 3.2 e 4.3.1.}
 
-% SLIDE 6 -- 2 minutos
-\begin{frame}[t]{Uma hipótese concreta para as NF-e}
-  \vspace{1mm}
-  \textbf{Contribuição}\par
-  Aprender representações específicas de transações melhora os classificadores avaliados.\par
-  \vspace{4mm}
-  \textbf{Limitações}\par
-  \begin{itemize}\setlength{\itemsep}{1mm}
-    \item Dois capítulos e textos em inglês.
-    \item Sem demonstrar transferência entre países ou desempenho na NCM brasileira.
-    \item F1 ponderado deve ser lido junto às métricas das classes raras.
-  \end{itemize}
-  \vspace{3mm}
-  \textbf{Possível aplicação}\par
-  Comparar MiniLM original e ajustado em NF-e, com códigos mais detalhados e uma amostra validada por especialistas.\par
-  \vspace{4mm}
-  \alert{O ajuste mantém o ganho em emitentes e períodos não vistos?}
-  \fonte{Anggoro et al. (2025), seções 4--6; Paula et al., seções 3 e 5. Aplicação e pergunta: avaliação do apresentador.}
+\renewcommand{\secao}{CONCEITOS}
+% Slide 6; 80 segundos
+\begin{frame}[t]{O mesmo código define pares positivos}
+\normalfont\sffamily
+\textbf{Aprendizagem contrastiva supervisionada}\par
+Usar o rótulo fiscal para decidir quais descrições aproximar.
+\par\vspace{1.5mm}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{@{}lp{.56\textwidth}l@{}}
+\toprule
+\textbf{Papel} & \textbf{Descrição ilustrativa} & \textbf{Classe}\\
+\midrule
+Âncora & Notebook Lenovo ThinkPad 512 GB & A\\
+Positivo & Laptop ThinkPad Lenovo, SSD 512GB & A\\
+Negativo & Monitor LCD para computador & B\\
+\bottomrule
+\end{tabular}\par
+\par\vspace{1.5mm}
+\alert{Aproximar a âncora do positivo e favorecer sua distinção dos negativos.}
+\par\par\vspace{1.5mm}
+{\small Exemplo didático: A/B não são enquadramentos fiscais reais.}
+\fonte{Anggoro et al., seção 3.2 e Figura 2. Exemplo elaborado para esta apresentação.}
 \end{frame}
-\note{
-Tempo: 2 minutos. A minha avaliação é que o artigo é interessante porque melhora uma etapa que nosso trabalho manteve fixa: a geração dos embeddings.
-A evidência, porém, está limitada aos dados e configurações estudados.
-Ter duas bases não significa demonstrar transferência: o artigo não mostra um modelo treinado em um país e testado sem novo ajuste no outro.
-A média ponderada pode esconder dificuldades nas classes raras, por isso deve ser acompanhada de macro-F1 e resultados por classe.
-A continuidade possível seria comparar o MiniLM já utilizado com o mesmo modelo após ajuste contrastivo.
-Manter o classificador e o conjunto de teste iguais ajuda a isolar o efeito do ajuste.
-Avançar para códigos mais detalhados em um recorte viável e preservar atributos técnicos relevantes.
-Reservar uma amostra validada por especialistas é importante, pois nossa base atual usa os códigos declarados pelos contribuintes.
-Separar avaliação por emitente e período permite investigar generalização, com controle de duplicatas e descrições muito próximas.
-Encerrar retomando a pergunta: o ganho do ajuste permanece em descrições de empresas e períodos que não apareceram no treinamento?
-Essa é uma hipótese para investigação, e não uma melhoria já comprovada nas NF-e.
-[Sources] Anggoro et al., seções 4, 5 e 6; artigo_welyab_pecs.pdf, seções 3 e 5. Avaliação e proposta do apresentador.
-}
+\note{\small A âncora é uma descrição da base e o positivo é outra transação com o mesmo código. Os textos não precisam ser idênticos nem o produto precisa ser exatamente o mesmo. O método usa os rótulos para formar pares sem gerar paráfrases artificiais que possam eliminar informação técnica. O artigo experimenta um ou três positivos por âncora, formando pares adicionais. Os negativos serão obtidos a partir do lote pela MNR.\par [Sources] Anggoro et al., seção 3.2 e Figura 2. Exemplo elaborado para esta apresentação.}
 
+\renewcommand{\secao}{CONCEITOS}
+% Slide 7; 80 segundos
+\begin{frame}[t]{MNR compara o positivo com os demais}
+\normalfont\sffamily
+\textbf{MNR: Multiple Negative Ranking Loss}\par
+Função de perda já existente, aplicada ao ajuste do SBERT.
+\par\vspace{1.5mm}
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+ & Positivo $b_1$ & Positivo $b_2$\\
+\midrule
+Âncora $a_1$ & \textcolor{Verde}{\textbf{par correto}} & negativo do lote\\
+Âncora $a_2$ & negativo do lote & \textcolor{Verde}{\textbf{par correto}}\\
+\bottomrule
+\end{tabular}\par
+\end{center}
+\par\vspace{1.5mm}
+\begin{itemize}
+\item A perda favorece maior similaridade para o par correto.
+\item Usa outros positivos do lote como negativos de cada âncora.
+\item Similaridade por cosseno ou produto escalar.
+\end{itemize}
+\par\vspace{1mm}
+{\small Cuidado: outro item do mesmo código pode virar um falso negativo.}
+\fonte{Anggoro et al., seção 3.3 e Apêndice II. Falsos negativos: análise do apresentador.}
+\end{frame}
+\note{\small Para um lote com n pares, a âncora ai deve preferir bi aos demais bj. É uma competição de similaridades: não basta aproximar dois textos isoladamente. A MNR usa exemplos negativos do próprio lote, poupando seleção manual. A técnica não foi inventada por Anggoro: seu artigo referencia Henderson et al. (2017) e literatura posterior. A escolha dos pares pelo código é a aplicação supervisionada ao domínio. Apontar como análise crítica que a hipótese de outros pares serem negativos pode falhar se o lote contiver vários exemplos do mesmo código; não afirmar que o artigo documenta uma solução específica para isso.\par [Sources] Anggoro et al., seção 3.3 e Apêndice II; Henderson et al. (2017), referência do artigo. Ressalva de falsos negativos: análise metodológica do apresentador.}
+
+\renewcommand{\secao}{METODOLOGIA}
+% Slide 8; 75 segundos
+\begin{frame}[t]{Há dois treinamentos separados}
+\normalfont\sffamily
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.47\textwidth}
+\textcolor{Verde}{\textbf{1. Ajustar a representação}}\par\par\vspace{1.5mm}
+\textbf{70\% das transações}\par\par\vspace{1.5mm}
+Descrições + códigos\\[1mm]
+$\downarrow$\\[1mm]
+Pares positivos\\[1mm]
+$\downarrow$\\[1mm]
+SBERT treinado com MNR
+\end{column}
+\begin{column}{.47\textwidth}
+\textcolor{Verde}{\textbf{2. Treinar o classificador}}\par\par\vspace{1.5mm}
+\textbf{30\% das transações}\par\par\vspace{1.5mm}
+SBERT ajustado gera vetores\\[1mm]
+$\downarrow$\\[1mm]
+SVM ou Random Forest\\[1mm]
+$\downarrow$\\[1mm]
+Validação estratificada: 5 folds
+\end{column}
+\end{columns}\par
+\par\vspace{1.5mm}
+\begin{block}{Uso em uma descrição nova}
+Texto $\rightarrow$ SBERT ajustado $\rightarrow$ vetor $\rightarrow$ classificador $\rightarrow$ código
+\end{block}
+\fonte{Anggoro et al., seção 3.1, seção sobre classificadores e seção 5.1.}
+\end{frame}
+\note{\small O protocolo não é uma única divisão convencional de 70\% treino e 30\% teste de toda a cadeia. Setenta por cento ajustam o gerador de embeddings; os outros trinta por cento são destinados ao treino e à avaliação dos classificadores com cinco partições estratificadas. A estratificação preserva aproximadamente as proporções das classes, não torna a base balanceada. Na segunda etapa o codificador ajustado produz features; são os parâmetros do SVM ou da floresta que são treinados. SVM aprende fronteiras de decisão; Random Forest combina árvores.\par [Sources] Anggoro et al., seção 3.1, seção sobre classificadores e seção 5.1.}
+
+\renewcommand{\secao}{METODOLOGIA}
+% Slide 9; 55 segundos
+\begin{frame}[t]{Os experimentos isolam escolhas do método}
+\normalfont\sffamily
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{@{}lp{.62\textwidth}@{}}
+\toprule
+\textbf{Escolha} & \textbf{Alternativas avaliadas}\\
+\midrule
+Codificador & BERT / DistilBERT (base, uncased)\\
+Texto & Original / pré-processado\\
+Pares positivos & 1 / 3 por âncora\\
+Pooling & Média / máximo / [CLS]\\
+Perda & MNR / MNR simétrica; cosseno / produto escalar\\
+Treinamento & Lotes 8/32; épocas 10/30; taxas 0,00002 / 0,00005\\
+\bottomrule
+\end{tabular}\par
+\par\vspace{1.5mm}
+\textbf{Classificadores:} SVM e Random Forest, em configurações padrão.\par
+\par\vspace{1.5mm}
+{\small Execução com GPU; comparação com BERT/DistilBERT ajustados diretamente.}
+\fonte{Anggoro et al., seções 4.2--4.3 e Tabelas III--VIII.}
+\end{frame}
+\note{\small Essa visão permite acompanhar quais componentes mudam. As tabelas seguintes são comparações de configurações, não um único experimento com todos os parâmetros possíveis combinados. MNR simétrica considera os dois sentidos do par. A escala foi avaliada em 20 e 50. O artigo não faz uma otimização adicional dos hiperparâmetros dos classificadores e usa recursos de cluster com GPU. A referência é transformer ajustado diretamente para prever classes, não BERT sem treinamento.\par [Sources] Anggoro et al., seções 4.2--4.3 e Tabelas III--VIII.}
+
+\renewcommand{\secao}{AVALIAÇÃO}
+% Slide 10; 40 segundos
+\begin{frame}[t]{O F1 deve ser lido junto ao desbalanceamento}
+\normalfont\sffamily
+\begin{itemize}
+\item \textbf{Precisão:} entre as previsões de uma classe, quantas estão corretas?
+\item \textbf{Revocação:} entre os itens da classe, quantos foram recuperados?
+\item \textbf{F1:} combina precisão e revocação.
+\end{itemize}
+\par\vspace{1.5mm}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.47\textwidth}
+\textbf{F1 ponderado}\par\par\vspace{1.5mm}
+Pesa cada classe pela sua frequência. É o foco das comparações do artigo.
+\end{column}
+\begin{column}{.47\textwidth}
+\textbf{Macro-F1}\par\par\vspace{1.5mm}
+Dá o mesmo peso a cada classe. Ajuda a avaliar classes menos frequentes.
+\end{column}
+\end{columns}\par
+\par\vspace{1.5mm}
+\alert{Um bom resultado agregado não garante bom desempenho em cada código.}
+\fonte{Anggoro et al., seção 5.1 e Tabela III.}
+\end{frame}
+\note{\small O artigo relata kappa de Cohen e médias macro, micro e ponderada de precisão, revocação e F1. Aqui as comparações numéricas usarão F1 ponderado para manter consistência com o foco do artigo. Ele não deve ser interpretado como número de decisões fiscais auditadas corretamente. Em dados desbalanceados, resultados por classe e macro-F1 completam a leitura. Não reproduzir como equivalentes as médias de F1 e a acurácia de outro estudo.\par [Sources] Anggoro et al., seção 5.1 e Tabela III.}
+
+\renewcommand{\secao}{RESULTADOS}
+% Slide 11; 65 segundos
+\begin{frame}[t]{O ajuste contrastivo supera a referência}
+\normalfont\sffamily
+\textbf{F1 ponderado}\par\par\vspace{1.5mm}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Método} & \textbf{Índia} & \textbf{EUA}\\
+\midrule
+BERT ajustado diretamente & 0,8406 & 0,7689\\
+SBERT/BERT + SVM & 0,8620 & \textcolor{Verde}{\textbf{0,8013}}\\
+SBERT/BERT + Random Forest & \textcolor{Verde}{\textbf{0,8656}} & 0,8005\\
+\bottomrule
+\end{tabular}\par
+\par\vspace{1.5mm}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.47\textwidth}
+{\LARGE\color{Verde}\textbf{+2,50 p.p.}}\par\par\vspace{1.5mm}
+Melhor ganho na Índia.
+\end{column}
+\begin{column}{.47\textwidth}
+{\LARGE\color{Verde}\textbf{+3,24 p.p.}}\par\par\vspace{1.5mm}
+Melhor ganho nos EUA.
+\end{column}
+\end{columns}\par
+\par\vspace{1.5mm}
+{\small Ganhos calculados em relação ao BERT da Tabela III.}
+\fonte{Anggoro et al., Tabela III; diferenças calculadas a partir dos valores publicados.}
+\end{frame}
+\note{\small Os ganhos são diferenças absolutas em pontos percentuais, não porcentagens relativas. Índia: 0,8656 menos 0,8406 = 0,0250. EUA: 0,8013 menos 0,7689 = 0,0324. A tabela mostra RF melhor na Índia e SVM ligeiramente melhor nos EUA. Não há vencedor universal entre os classificadores. A comparação sustenta o método nessas bases; não demonstra transferência entre países nem superioridade em toda tarefa de classificação fiscal. As tabelas de ablação contêm outras configurações e alguns resultados superiores, portanto evitar chamar esses valores de máximos globais do artigo.\par [Sources] Anggoro et al., Tabela III; diferenças calculadas a partir dos valores publicados.}
+
+\renewcommand{\secao}{RESULTADOS}
+% Slide 12; 60 segundos
+\begin{frame}[t]{A limpeza remove informação útil}
+\normalfont\sffamily
+\textbf{SBERT/DistilBERT + SVM: F1 ponderado}\par\par\vspace{1.5mm}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Base} & \textbf{Original} & \textbf{Limpo} & \textbf{Variação}\\
+\midrule
+Índia & 0,8603 & 0,7790 & \textcolor{Terracota}{\textbf{$-$8,13 p.p.}}\\
+EUA & 0,7953 & 0,7185 & \textcolor{Terracota}{\textbf{$-$7,68 p.p.}}\\
+\bottomrule
+\end{tabular}\par
+\par\vspace{1.5mm}
+\textbf{O que pode se perder?}\par\par\vspace{1.5mm}
+Modelo, capacidade e especificações como \textbf{512 GB}.\par
+\par\vspace{1.5mm}
+\begin{itemize}
+\item LIME: explica localmente quais termos influenciam uma previsão.
+\item O exemplo do artigo indica relevância de atributos técnicos.
+\end{itemize}
+\fonte{Anggoro et al., seção 3.1, seção 5.3, Tabela IV e Figura 3.}
+\end{frame}
+\note{\small O pré-processamento inclui conversão para minúsculas, remoção de duplicatas, limpeza de informação alfanumérica e retenção de tokens com pelo menos dois caracteres. A redução de tokens foi 8\% na Índia e 19\% nos EUA. A Tabela IV mostra queda também com RF; os dois números exibidos são do SVM com DistilBERT, não da configuração BERT do slide anterior. LIME analisa uma previsão local por perturbações do texto. A Figura 3 ilustra que a informação 512 GB influencia a decisão. Isso não prova causalidade geral nem que toda limpeza de texto prejudica.\par [Sources] Anggoro et al., seção 3.1, seção 5.3, Tabela IV e Figura 3.}
+
+\renewcommand{\secao}{RESULTADOS}
+% Slide 13; 50 segundos
+\begin{frame}[t]{Mais positivos enriquecem o ajuste}
+\normalfont\sffamily
+\textbf{SBERT/DistilBERT: F1 ponderado}\par\par\vspace{1.5mm}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{@{}llccc@{}}
+\toprule
+\textbf{Base} & \textbf{Modelo} & \textbf{1 positivo} & \textbf{3 positivos} & \textbf{Ganho}\\
+\midrule
+Índia & SVM & 0,8360 & 0,8603 & +2,43 p.p.\\
+Índia & RF & 0,8410 & 0,8637 & +2,27 p.p.\\
+EUA & SVM & 0,7735 & 0,7953 & +2,18 p.p.\\
+EUA & RF & 0,7688 & 0,7958 & +2,70 p.p.\\
+\bottomrule
+\end{tabular}\par
+\par\vspace{1.5mm}
+\textbf{Interpretação:} mais descrições da mesma classe oferecem maior diversidade ao treinamento.\par
+\par\vspace{1.5mm}
+\alert{O benefício tem custo: mais pares e maior tempo de ajuste.}
+\fonte{Anggoro et al., seção 3.2, seção 4.3.1 e Tabela V; ganhos calculados.}
+\end{frame}
+\note{\small Cada âncora recebe três positivos em vez de um, produzindo mais pares de treinamento. O ganho é consistente nos quatro cenários da Tabela V, entre 2,18 e 2,70 pontos percentuais. Não extrapolar para um número ilimitado de positivos; o artigo não demonstra esse comportamento. O mesmo código pode agrupar várias formas legítimas de descrever mercadorias, e essa diversidade é o sinal que o codificador aprende.\par [Sources] Anggoro et al., seção 3.2, seção 4.3.1 e Tabela V; ganhos calculados.}
+
+\renewcommand{\secao}{RESULTADOS}
+% Slide 14; 45 segundos
+\begin{frame}[t]{O ganho também tem custo de armazenamento}
+\normalfont\sffamily
+\begin{itemize}
+\item \textbf{Pooling:} resultados próximos; nenhuma opção domina todas as configurações.
+\item \textbf{MNR simétrica e escala:} mudanças pequenas nos cenários avaliados.
+\item \textbf{Treinamento:} 30 épocas e taxa 0,00002 favorecem os resultados; lotes maiores trazem ganhos modestos.
+\end{itemize}
+\par\vspace{1.5mm}
+\textbf{Tamanho relatado na base indiana}\par\par\vspace{1.5mm}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+ & \textbf{F1 ponderado} & \textbf{Tamanho}\\
+\midrule
+BERT ajustado diretamente & 0,8406 & 418 MB\\
+SBERT/DistilBERT + SVM & 0,8603 & 291 MB\\
+SBERT/BERT + RF & 0,8656 & 631 MB\\
+\bottomrule
+\end{tabular}\par
+\fonte{Anggoro et al., Tabelas III e VI--VIII.}
+\end{frame}
+\note{\small As Tabelas VI a VIII avaliam componentes. Não atribuir o ganho principal a uma única escolha de pooling. A tabela de tamanho usa a Tabela III: DistilBERT com SVM ocupa menos que BERT diretamente ajustado, mas mais que DistilBERT diretamente ajustado, que tem 255 MB. Modelo menor não implica necessariamente menor latência de toda a cadeia: também há o classificador. As comparações de épocas e lotes são experimentos próprios; não misturar números para inventar uma configuração ótima conjunta.\par [Sources] Anggoro et al., Tabelas III e VI--VIII.}
+
+\renewcommand{\secao}{COMPLEMENTO}
+% Slide 15; material complementar
+\begin{frame}[t]{Como a MNR calcula a perda}
+\normalfont\sffamily
+\textbf{Em cada lote de pares positivos:}
+\par\vspace{1.5mm}
+\begin{enumerate}
+\item Calcular a similaridade de cada âncora com todos os candidatos do lote.
+\item Aplicar a escala e converter os escores em probabilidades (softmax).
+\item Penalizar o modelo quando o positivo correto recebe baixa probabilidade.
+\item Atualizar o codificador para reduzir essa perda.
+\end{enumerate}
+\par\vspace{1.5mm}
+\textbf{MNR simétrica:} também avalia os pares no sentido inverso.
+\par\par\vspace{1.5mm}
+{\small A perda padrão é a entropia cruzada sobre os candidatos do lote.}
+\fonte{Anggoro et al., seção 3.3, Tabela VII e Apêndice II; descrição didática do cálculo.}
+\end{frame}
+\note{\small A MNR padrão calcula entropia cruzada sobre candidatos do lote. As similaridades passam por uma escala e pela softmax. O rótulo esperado é a posição do positivo correspondente. A versão simétrica considera o sentido inverso. A escala avaliada no artigo foi 20 ou 50; não é uma regra fiscal.\par [Sources] Anggoro et al., seção 3.3, Tabela VII e Apêndice II; descrição didática do cálculo.}
+
+\renewcommand{\secao}{REFERÊNCIAS}
+% Slide 16; material complementar
+\begin{frame}[t]{Fontes utilizadas}
+\normalfont\sffamily
+{\small
+\textbf{Anggoro, A. W.; Corcoran, P.; De Widt, D.; Li, Y. (2025).}\par
+\textit{Harmonized System Code Classification using Supervised Contrastive Learning with Sentence BERT and Multiple Negative Ranking Loss.}\par
+Data Technologies and Applications, 59(2), 279--301.\par
+\href{https://doi.org/10.1108/DTA-01-2024-0052}{DOI: 10.1108/DTA-01-2024-0052}. Versão dos autores, ORCA.
+\par\vspace{1.5mm}
+\textbf{Paula, W.; Jacob Junior, A. F. L.; Cortes, O. A. C.; Lobato, F. M.}\par
+\textit{Avaliação de Large Language Models Para Classificação de Produtos da Nota Fiscal Eletrônica em Grupos da Nomenclatura Comum do Mercosul.}\par
+Manuscrito local: artigo\_welyab\_pecs.pdf.
+\par\vspace{1.5mm}
+\textbf{Referências técnicas citadas por Anggoro}\par
+Reimers e Gurevych (2019): SBERT. Henderson et al. (2017): aprendizagem com negativos. Ribeiro et al. (2016): LIME.
+}
+\fonte{PDFs locais de Anggoro et al. e Welyab et al.; bibliografia de Anggoro.}
+\end{frame}
+\note{\small O artigo de Anggoro é a fonte primária dos resultados e conceitos apresentados; o PDF de Welyab fundamenta o contexto e a comparação metodológica. As referências técnicas são apresentadas conforme a bibliografia de Anggoro, sem sugerir experimentos próprios.\par [Sources] PDFs locais de Anggoro et al. e Welyab et al.; bibliografia de Anggoro.}
 \end{document}
