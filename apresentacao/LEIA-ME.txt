@@ -1,9 +1,9 @@
-APRESENTAÇÃO — ANGGORO ET AL. (2025)
+APRESENTAÇÃO - CONCEITOS DE ANGGORO ET AL. (2025)
 
 Arquivos
-- apresentacao_sbert_contrastivo.pdf: apresentação 16:9, 14 slides principais e 2 complementares.
+- apresentacao_sbert_contrastivo.pdf: apresentação 16:9, 16 slides principais e 3 complementares.
 - apresentacao_sbert_contrastivo.tex: fonte LaTeX/Beamer, com notas e fontes por slide.
-- roteiro_apresentacao_sbert.txt: roteiro com tempos e explicações; 13 minutos no total.
+- roteiro_apresentacao_sbert.txt: roteiro com tempos, explicações e fontes; 13 minutos sugeridos para os slides principais.
 - compilar.ps1: recompila com Tectonic e atualiza PDF/log nesta pasta.
 - apresentacao_sbert_contrastivo.log: registro da compilação final.
 
@@ -16,25 +16,33 @@ Não há imagens ou bibliografia externas necessárias à compilação.
 Os arquivos intermediários e a revisão visual ficam em .build/, ignorada pelo Git.
 A instalação do Tectonic pode precisar de rede no primeiro uso para obter os pacotes LaTeX.
 
-Conteúdo
-Slides 1–2: artigo, problema e conexão com Welyab.
-Slides 3–4: bases, descrições, features e classes.
-Slides 5–7: SBERT, pooling, pares positivos e MNR.
-Slides 8–10: dois treinamentos, configurações e avaliação.
-Slides 11–14: resultados, limpeza, quantidade de pares, parâmetros e tamanho.
-Slides 15–16: cálculo conceitual da MNR e referências.
+Conteúdo e foco
+A exposição explica os conceitos do artigo de Anggoro et al. antes de apresentar os resultados.
+Welyab Paula é identificado como apresentador; não há comparação com seu artigo nesta versão.
+Slides 1-2: pergunta central e exemplo de descrições com classes conhecidas.
+Slides 3-5: embeddings, BERT/DistilBERT, pooling e compartilhamento de pesos no SBERT.
+Slides 6-9: pares supervisionados, cosseno, negativos do lote, softmax e exemplo numérico da MNR.
+Slide 10: ajuste do encoder, treinamento do classificador e inferência.
+Slides 11-14: bases, F1, evidência do ajuste, preservação da informação e diversidade de positivos.
+Slides 15-16: limites e síntese conceitual.
+Slides 17-19: fórmula da MNR, versão simétrica, hiperparâmetros e referências.
 
 Fontes e interpretação
 O artigo de Anggoro na pasta references é a versão dos autores disponibilizada pelo ORCA.
-Os resultados são transcritos das Tabelas III a VIII; as diferenças em pontos percentuais foram calculadas.
+Os resultados se baseiam nas Tabelas I e III a VIII; as diferenças em pontos percentuais foram calculadas.
 Os exemplos de pares A/B são didáticos, não são enquadramentos fiscais reais.
+A matriz de similaridade é hipotética e usa três pares de classes distintas.
+O exemplo de softmax usa escala 2 para facilitar a explicação; o artigo testa escalas 20 e 50.
+Para a linha (0,80; 0,30; 0,10), a preferência pelo positivo é aproximadamente 0,619 e a perda é 0,479.
+A fórmula da MNR é uma exposição didática da perda padrão, não uma cópia literal do pseudocódigo simplificado do manuscrito.
 O código é usado como rótulo e para formar pares; a descrição é a entrada para inferência.
 Os capítulos 84/85 delimitam o recorte; 172/112 são as quantidades de classes previstas.
 Não se afirma uma padronização de comprimento dos códigos que o manuscrito não detalha explicitamente.
-A ressalva de falsos negativos é uma análise do apresentador.
-O resultado de Welyab não é comparado numericamente como ranking: classes, métricas e protocolos diferem.
-A comparação de Welyab privilegia a seção 4 do PDF, pois há inconsistências pontuais na seção 3 quanto à listagem de capítulos/modelos.
+A divisão 70%/30% separa ajuste do encoder e treinamento/validação dos classificadores; os 30% não são exclusivamente teste final.
+As ressalvas sobre rótulos incorretos e falsos negativos são análises críticas, não efeitos medidos no artigo.
+As referências técnicas são identificadas conforme a bibliografia de Anggoro.
+As notas LaTeX contêm blocos [Sources]; o roteiro apresenta as mesmas explicações e fontes em texto simples.
 
 Verificação
-16 páginas renderizadas e inspecionadas individualmente. Compilação LaTeX sem avisos de transbordamento.
+19 páginas renderizadas e inspecionadas individualmente. Compilação LaTeX sem avisos de transbordamento.
 Os materiais antigos em backup/ foram preservados.
